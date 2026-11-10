@@ -1,0 +1,33 @@
+{
+  "name": "tetos-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon app.js",
+    "swagger": "node ./src/docs/swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lc5d5/tetos-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lc5d5/tetos-api/issues"
+  },
+  "homepage": "https://github.com/lc5d5/tetos-api#readme",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.5.0",
+    "nodemon": "^3.1.14",
+    "prisma": "^6.19.3",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
