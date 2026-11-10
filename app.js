@@ -31,8 +31,8 @@ app.use("/imoveis-tipo", usuarioAutenticado, imoveisTipoRoutes);
 app.use("/usuarios", usuarioAutenticado, usuariosRoutes);
 app.use("/locatarios", usuarioAutenticado, locatariosRoutes);
 app.use("/imoveis", usuarioAutenticado, imoveisRoutes);
-app.use("/manutencoes", usuarioAutenticado, historicoManutencao)
-app.use("/historico-imovel", usuarioAutenticado, historicoImovel)
+app.use("/historico-manutencoes", usuarioAutenticado, historicoManutencao)
+app.use("/historico-imoveis", usuarioAutenticado, historicoImovel)
 
 app.listen(3000, () => {
     console.log("Servidor on: http://localhost:3000");

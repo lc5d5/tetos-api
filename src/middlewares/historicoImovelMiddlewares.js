@@ -1,37 +1,28 @@
 function validarDados(req, res, next) {
-  const { descricao, valor, data, imovel_id } = req.body;
+    const colunas = [
+        "descricao",
+        "data_entrada",
+        "data_saida",
+        "imovel_id",
+        "locatario_id"
+    ];
+    const dados = req.body;
+    
+    let campoAusentes = colunas.filter(chave => !Object.keys(dados).includes(chave));
 
-  if (!descricao) {
-    res.json({
-      type: "warning",
-      description: "Coluna 'descricao' não informada",
-    });
-  }
+    if(campoAusentes.length > 0){
 
-  if (!valor) {
-    res.json({
-      type: "warning",
-      description: "Coluna 'valor' não informada",
-    });
-  }
+        res.json(campoAusentes.map(campo => {
+            return {
+                type: "warning",
+                description: `Coluna ${campo} não informada`
+            }
+        }))
+    }
 
-  if (!data) {
-    res.json({
-      type: "warning",
-      description: "Coluna 'data' não informada",
-    });
-  }
-
-  if (!imovel_id) {
-    res.json({
-      type: "warning",
-      description: "Coluna 'imovel_id' não informada",
-    });
-  }
-
-  next();
+    next();
 }
 
 module.exports = {
-  validarDados,
-};
+    validarDados
+}

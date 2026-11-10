@@ -12,10 +12,10 @@ rotas.get("/",
         description: 'Lista de manutenções retornada com sucesso',
         schema: [{ 
         id: 1, 
-        $descricao: 'Troca de torneira',
-        $valor: 10,
-        $data: '10/11/2026',
-        $imovel_id: 'cccc-ddddd-eeee 
+        descricao: 'Troca de torneira',
+        valor: 10,
+        data: '10/11/2026',
+        imovel_id: 'cccc-ddddd-eeee 
         createdAt: '2026-11-09T00:00:00.000Z',
         updatedAt: '2026-11-09T00:00:00.000Z' }]
     }

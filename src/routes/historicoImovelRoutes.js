@@ -1,21 +1,33 @@
-const { buscar, criar, editar, deletar } = require("../controllers/historicoImovelController");
-const { validarDados } = require("../middlewares/historicoImovelMiddlewares");
+const {
+  buscar,
+  criar,
+  editar,
+  deletar,
+} = require("../controllers/historicoImovelController");
+const {
+  validarDados,
+} = require("../middlewares/historicoImovelMiddlewares");
 
 const rotas = require("express").Router();
 
-rotas.get("/",
-    /* 
-    #swagger.tags = ['Manutenção']
+rotas.get(
+  "/",
+  /* 
+    #swagger.tags = ['Histórico']
     #swagger.summary = 'Buscar'
-    #swagger.description = 'Retorna um array de manutenções cadastrados'
+    #swagger.description = 'Retorna um array de históricos cadastrados'
     #swagger.responses[200] = {
-        description: 'Lista de manutenções retornada com sucesso',
+        description: 'Lista de históricos retornada com sucesso',
         schema: [{ 
         id: 1, 
-        $descricao: 'Troca de torneira',
-        $valor: 10,
-        $data: '10/11/2026',
-        $imovel_id: 'cccc-ddddd-eeee 
+        descricao: 'Troca de torneira',
+        data_entrada: 10,
+        data_saida: '10/11/2026',
+        valor_aluguel: 700
+        valor_iptu: 800
+        valor_condominio: 1000
+        imovel_id: 'cccc-ddddd-eeee'
+        locatario_id: 'cccc-dddd-eeee'
         createdAt: '2026-11-09T00:00:00.000Z',
         updatedAt: '2026-11-09T00:00:00.000Z' }]
     }
@@ -23,11 +35,13 @@ rotas.get("/",
         description: 'Erro interno no servidor'
     }
     */
-    buscar);
+  buscar,
+);
 
-rotas.post("/",
-    /* 
-    #swagger.tags = ['Manutenção']
+rotas.post(
+  "/",
+  /* 
+    #swagger.tags = ['Histórico']
     #swagger.summary = 'Criar'
     #swagger.description = 'Cria um novo histórico'
     #swagger.parameters['body'] = { 
@@ -35,10 +49,16 @@ rotas.post("/",
         required: true, 
         description: 'Dados para criação do histórico',
         schema: { 
-          $descricao: 'Troca de torneira',
-          $valor: 10,
-          $data: '10/11/2026',
-          $imovel_id: 'cccc-dddd-eeee  
+            $descricao: 'Troca de torneira',
+            $data_entrada: 10,
+            $data_saida: '10/11/2026',
+            $valor_aluguel: 700
+            $valor_iptu: 800
+            $valor_condominio: 1000
+            $imovel_id: 'cccc-ddddd-eeee'
+            $locatario_id: 'cccc-dddd-eeee'
+            $createdAt: '2026-11-09T00:00:00.000Z',
+            $updatedAt: '2026-11-09T00:00:00.000Z' 
           } 
     }
     #swagger.responses[201] = {
@@ -52,11 +72,14 @@ rotas.post("/",
         description: 'Erro interno no servidor'
     }
     */
-    validarDados, criar);
+  validarDados,
+  criar,
+);
 
-rotas.put("/:id",
-    /* 
-    #swagger.tags = ['Manutenção']
+rotas.put(
+  "/:id",
+  /* 
+    #swagger.tags = ['Histórico']
     #swagger.summary = 'Editar'
     #swagger.description = 'Edita um histórico existente pelo ID'
     #swagger.parameters['id'] = {
@@ -70,10 +93,16 @@ rotas.put("/:id",
         required: true, 
         description: 'Novos dados do histórico',
         schema: { 
-          $descricao: 'Troca de torneira',
-          $valor: 10,
-          $data: '10/11/2026',
-          $imovel_id: 'cccc-dddd-eeee
+            $descricao: 'Troca de torneira',
+            $data_entrada: 10,
+            $data_saida: '10/11/2026',
+            $valor_aluguel: 700
+            $valor_iptu: 800
+            $valor_condominio: 1000
+            $imovel_id: 'cccc-ddddd-eeee'
+            $locatario_id: 'cccc-dddd-eeee'
+            $createdAt: '2026-11-09T00:00:00.000Z',
+            $updatedAt: '2026-11-09T00:00:00.000Z' 
         } 
     }
     #swagger.responses[200] = {
@@ -89,10 +118,13 @@ rotas.put("/:id",
         description: 'Erro interno no servidor'
     }
     */
-    validarDados, editar);
+  validarDados,
+  editar,
+);
 
-rotas.delete("/:id",
-    /* 
+rotas.delete(
+  "/:id",
+  /* 
     #swagger.tags = ['Manutenção']
     #swagger.summary = 'Deletar'
     #swagger.description = 'Remove um histórico pelo ID'
@@ -112,6 +144,7 @@ rotas.delete("/:id",
         description: 'Erro interno no servidor'
     }
     */
-    deletar);
+  deletar,
+);
 
 module.exports = rotas;

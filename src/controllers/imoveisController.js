@@ -2,18 +2,30 @@ const PRISMA = require("../services");
 
 async function buscar(req, res) {
   try {
-    const query = {}; //
+    const query = {};
+    const includeObj = {};
 
-    if(req.query.manutencoes == "true"){ //procurando na URL o ?manutencoes=true
-      query.include = {
-        historico_manutencao: true
-      }
+    if (req.query.manutencoes === "true") {
+      includeObj.historico_manutecao = true;
+    }
+
+    if (req.query.historicos === "true") {
+      includeObj.historico_imovel = true;
+    }
+
+    if (req.query.locatario === "true") {
+      includeObj.locatarios = true;
+    }
+
+    // Se houver pelo menos um relacionamento solicitado, adiciona o include na query
+    if (Object.keys(includeObj).length > 0) {
+      query.include = includeObj;
     }
 
     const linhas = await PRISMA.imoveis.findMany(query);
-    res.json(linhas);
+    return res.json(linhas);
   } catch (error) {
-    res.json({
+    return res.status(500).json({
       type: "error",
       description: error.message,
     });
@@ -34,9 +46,9 @@ async function criar(req, res) {
         garagens: Number(dados.garagens),
         metragem: Number(dados.metragem),
         valor_aluguel: Number(dados.valor_aluguel),
-        imagem: `/uploads/imoveis/${arquivo.filename}`
-      }
-    }); //necessário criar parâmetros para a função create()
+        imagem: `/uploads/imoveis/${arquivo.filename}`,
+      },
+    });
 
     res.json({
       type: "success",
@@ -64,7 +76,7 @@ async function editar(req, res) {
 
     res.json({
       type: "success",
-      description: "Registro editado com sucesso.",
+      description: "Registro atualizado com sucesso.",
     });
   } catch (error) {
     res.json({

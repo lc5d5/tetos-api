@@ -15,8 +15,8 @@
       "get": {
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -50,7 +50,11 @@
     },
     "/niveis/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Níveis"
+        ],
+        "summary": "Buscar",
+        "description": "Retorna um array de níveis cadastrados",
         "parameters": [
           {
             "name": "authorization",
@@ -60,15 +64,45 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Lista de níveis retornada com sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "nome": {
+                    "type": "string",
+                    "example": "Admin"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "example": "2026-11-09T00:00:00.000Z"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Níveis"
+        ],
+        "summary": "Criar",
+        "description": "Cria um novo nível",
         "parameters": [
           {
             "name": "authorization",
@@ -78,13 +112,19 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
+            "description": "Dados para criação do nível",
             "schema": {
               "type": "object",
               "properties": {
                 "nome": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Admin"
                 }
-              }
+              },
+              "required": [
+                "nome"
+              ]
             }
           }
         ],
@@ -92,21 +132,51 @@
           "200": {
             "description": "OK"
           },
+          "201": {
+            "description": "Registro criado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Admin"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos ou faltando"
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
           }
         }
       }
     },
     "/niveis/{id}": {
       "put": {
-        "description": "",
+        "tags": [
+          "Níveis"
+        ],
+        "summary": "Editar",
+        "description": "Edita um nível existente pelo ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID do nível (UUID ou numérico)"
           },
           {
             "name": "authorization",
@@ -116,42 +186,69 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
+            "description": "Novos dados do nível",
             "schema": {
               "type": "object",
               "properties": {
                 "nome": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "senha": {
-                  "example": "any"
-                },
-                "niveis_id": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Gerente"
                 }
-              }
+              },
+              "required": [
+                "nome"
+              ]
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Registro atualizado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Gerente"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Registro não encontrado"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Níveis"
+        ],
+        "summary": "Deletar",
+        "description": "Remove um nível pelo ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID do nível que será deletado"
           },
           {
             "name": "authorization",
@@ -163,8 +260,17 @@
           "200": {
             "description": "OK"
           },
+          "204": {
+            "description": "Registro deletado com sucesso"
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Registro não encontrado"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
           }
         }
       }
@@ -535,29 +641,6 @@
         }
       }
     },
-    "/locatarios/{{where{id}": {
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": null,
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
     "/imoveis/": {
       "get": {
         "description": "",
@@ -565,6 +648,11 @@
           {
             "name": "authorization",
             "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "manutencoes",
+            "in": "query",
             "type": "string"
           }
         ],
@@ -673,7 +761,7 @@
         }
       }
     },
-    "/imoveis/{{where{id}": {
+    "/imoveis/{{where{id}}": {
       "delete": {
         "description": "",
         "parameters": [
@@ -692,6 +780,388 @@
         "responses": {
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/manutencoes/": {
+      "get": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Buscar",
+        "description": "Retorna um array de manutenções cadastrados",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Criar",
+        "description": "Cria um novo histórico",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "example": "any"
+                },
+                "valor": {
+                  "example": "any"
+                },
+                "data": {
+                  "example": "any"
+                },
+                "imovel_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Registro criado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Admin"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos ou faltando"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
+          }
+        }
+      }
+    },
+    "/manutencoes/{id}": {
+      "put": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Editar",
+        "description": "Edita um histórico existente pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do histórico (UUID ou numérico)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "example": "any"
+                },
+                "valor": {
+                  "example": "any"
+                },
+                "data": {
+                  "example": "any"
+                },
+                "imovel_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registro atualizado com sucesso"
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Registro não encontrado"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Deletar",
+        "description": "Remove um histórico pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do histórico que será deletado"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "Registro deletado com sucesso"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Registro não encontrado"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
+          }
+        }
+      }
+    },
+    "/historico-imovel/": {
+      "get": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Buscar",
+        "description": "Retorna um array de manutenções cadastrados",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Criar",
+        "description": "Cria um novo histórico",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "example": "any"
+                },
+                "valor": {
+                  "example": "any"
+                },
+                "data": {
+                  "example": "any"
+                },
+                "imovel_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Registro criado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Admin"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos ou faltando"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
+          }
+        }
+      }
+    },
+    "/historico-imovel/{id}": {
+      "put": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Editar",
+        "description": "Edita um histórico existente pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do histórico (UUID ou numérico)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "example": "any"
+                },
+                "valor": {
+                  "example": "any"
+                },
+                "data": {
+                  "example": "any"
+                },
+                "imovel_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registro atualizado com sucesso"
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Registro não encontrado"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manutenção"
+        ],
+        "summary": "Deletar",
+        "description": "Remove um histórico pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do histórico que será deletado"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "Registro deletado com sucesso"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Registro não encontrado"
+          },
+          "500": {
+            "description": "Erro interno no servidor"
           }
         }
       }
