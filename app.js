@@ -5,6 +5,8 @@ const imoveisTipoRoutes = require("./src/routes/imoveisTipoRoutes");
 const usuariosRoutes = require("./src/routes/usuariosRoutes");
 const locatariosRoutes = require("./src/routes/locatariosRoutes");
 const imoveisRoutes = require("./src/routes/imoveisRoutes");
+const historicoImovel = require("./src/routes/historicoImovelRoutes");
+const historicoManutencao = require("./src/routes/historicoManutencaoRoutes");
 const { login } = require("./src/controllers/usuariosController");
 const { usuarioAutenticado } = require("./src/middlewares/usuariosMiddlewares");
 
@@ -29,6 +31,8 @@ app.use("/imoveis-tipo", usuarioAutenticado, imoveisTipoRoutes);
 app.use("/usuarios", usuarioAutenticado, usuariosRoutes);
 app.use("/locatarios", usuarioAutenticado, locatariosRoutes);
 app.use("/imoveis", usuarioAutenticado, imoveisRoutes);
+app.use("/manutencoes", usuarioAutenticado, historicoManutencao)
+app.use("/historico-imovel", usuarioAutenticado, historicoImovel)
 
 app.listen(3000, () => {
     console.log("Servidor on: http://localhost:3000");
