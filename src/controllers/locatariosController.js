@@ -16,6 +16,19 @@ async function criar(req, res){
     try {
         const { nome, telefone, cpf_cnpj } = req.body;
 
+        const documentoJáExiste = await PRISMA.locatarios.count({
+            where: {
+                cpf_cnpj
+            }
+        })
+
+        if (documentoJáExiste > 0){
+            res.json({
+                type: "warning",
+                description: "CPF ou CNPJ já cadastrado!"
+            })
+        }
+
         await PRISMA.locatarios.create({
             data: {
                 nome,

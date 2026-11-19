@@ -42,7 +42,7 @@ async function editar(req, res){
         const { nome, email, senha, niveis_id } = req.body;
         const { id } = req.params;
 
-        await PRISMA.usuarios.update({
+        await PRISMA.niveis.update({
             where: {
                 id
             },            
