@@ -17,6 +17,10 @@ async function buscar(req, res) {
       includeObj.locatarios = true;
     }
 
+    if (req.query.tipo === "true") {
+      includeObj.imoveis_tipo = true;
+    }
+
     // Se houver pelo menos um relacionamento solicitado, adiciona o include na query
     if (Object.keys(includeObj).length > 0) {
       query.include = includeObj;
